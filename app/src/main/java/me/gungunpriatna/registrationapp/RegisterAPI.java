@@ -17,4 +17,11 @@ public interface RegisterAPI {
 
     @GET("view.php")
     Call<Value> view();
+
+    @FormUrlEncoded
+    @POST("update.php")
+    Call<Value> ubah(@Field("npm") String npm,
+                     @Field("nama") String nama,
+                     @Field("kelas") String kelas,
+                     @Field("sesi") String sesi);
 }
