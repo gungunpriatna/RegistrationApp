@@ -1,9 +1,12 @@
 package me.gungunpriatna.registrationapp;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -123,9 +126,62 @@ public class UpdateActivity extends AppCompatActivity {
             case android.R.id.home:
                 finish();
                 break;
+            case R.id.action_delete:
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+                alertDialogBuilder.setTitle("Peringatan");
+                alertDialogBuilder
+                        .setMessage("Apakah anda yakin ingin menghapus data ini.")
+                        .setCancelable(false)
+                        .setPositiveButton("Hapus", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                String npm = editTextNPM.getText().toString();
+                                Retrofit retrofit = new Retrofit.Builder()
+                                        .baseUrl(URL)
+                                        .addConverterFactory(GsonConverterFactory.create())
+                                        .build();
+                                RegisterAPI api = retrofit.create(RegisterAPI.class);
+                                Call<Value> call = api.hapus(npm);
+                                call.enqueue(new Callback<Value>() {
+                                    @Override
+                                    public void onResponse(Call<Value> call, Response<Value> response) {
+                                        String value = response.body().getValue();
+                                        String message = response.body().getMessage();
+                                        if (value.equals("1")) {
+                                            Toast.makeText(UpdateActivity.this, message, Toast.LENGTH_SHORT).show();
+                                            finish();
+                                        } else {
+                                            Toast.makeText(UpdateActivity.this, message, Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<Value> call, Throwable t) {
+                                        t.printStackTrace();
+                                        Toast.makeText(UpdateActivity.this, "Jaringan error", Toast.LENGTH_SHORT).show();
+
+                                    }
+                                });
+                            }
+                        }).setNegativeButton("Batal", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+                break;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_delete, menu);
+        return true;
     }
 
 

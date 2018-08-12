@@ -24,4 +24,8 @@ public interface RegisterAPI {
                      @Field("nama") String nama,
                      @Field("kelas") String kelas,
                      @Field("sesi") String sesi);
+
+    @FormUrlEncoded
+    @POST("delete.php")
+    Call<Value> hapus(@Field("npm") String npm);
 }
