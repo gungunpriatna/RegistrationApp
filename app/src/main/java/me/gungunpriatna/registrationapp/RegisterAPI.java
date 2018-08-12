@@ -28,4 +28,8 @@ public interface RegisterAPI {
     @FormUrlEncoded
     @POST("delete.php")
     Call<Value> hapus(@Field("npm") String npm);
+
+    @FormUrlEncoded
+    @POST("search.php")
+    Call<Value> search(@Field("search") String search);
 }
