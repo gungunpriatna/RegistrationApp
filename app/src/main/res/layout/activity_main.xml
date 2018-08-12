@@ -84,5 +84,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/register"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonLihat"
+        android:text="@string/view"/>
 
 </LinearLayout>
