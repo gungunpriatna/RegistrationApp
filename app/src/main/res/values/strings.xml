@@ -8,4 +8,5 @@
     <string name="afternoon">Siang (13.00-15.00 WIB)</string>
     <string name="register">Daftar</string>
     <string name="error">Kesalahan Jaringan</string>
+    <string name="view">Lihat Data</string>
 </resources>
